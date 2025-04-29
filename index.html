@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In - Test Cases</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Sign In Page Test Cases" />
+  </head>
+
+  <body>
+    <div class="app-container">
+      <!-- Test Cases Sidebar -->
+      <aside class="test-cases-sidebar">
+        <div class="sidebar-content">
+          <div class="test-cases-section">
+            <h2 class="test-cases-title">Test cases</h2>
+            <ul class="test-cases-list">
+              <li><button class="test-case-button active" data-case="1">Case 1</button></li>
+              <li><button class="test-case-button" data-case="2">Case 2</button></li>
+              <li><button class="test-case-button" data-case="3">Case 3</button></li>
+              <li><button class="test-case-button" data-case="4">Case 4</button></li>
+              <li><button class="test-case-button" data-case="5">Case 5</button></li>
+              <li><button class="test-case-button" data-case="6">Case 6</button></li>
+              <li><button class="test-case-button" data-case="7">Case 7</button></li>
+              <li><button class="test-case-button" data-case="8">Case 8</button></li>
+              <li><button class="test-case-button" data-case="9">Case 9</button></li>
+              <li><button class="test-case-button" data-case="10">Case 10</button></li>
+              <li><button class="test-case-button" data-case="11">Case 11</button></li>
+              <li><button class="test-case-button" data-case="12">Case 12</button></li>
+            </ul>
+          </div>
+          <!-- Test Case Description -->
+          <div class="test-case-description">
+            <p id="case-description">
+              This is a small description box that will explain what this case is. This is important as the developer will read this and then interact with the sandbox.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <!-- Login Interface -->
+        <div class="container">
+          <div class="content-wrapper">
+            <!-- Info Banners -->
+            <div id="error-alert" class="error-alert" style="display: none;">
+              <span id="error-message">Account access has been revoked.<br>Please contact your admin.</span>
+            </div>
+            
+            <div id="success-alert" class="success-alert" style="display: none;">
+              <span id="success-message">Logging in successfully...</span>
+            </div>
+
+            <div id="info-alert" class="info-alert" style="display: none;">
+              <span id="info-message">Check your inbox for a reset link.</span>
+            </div>
+
+            <!-- Login Card -->
+            <section id="login-card" class="login-box">
+              <div class="login-content">
+                <div class="title-container">
+                  <h1>Sign in</h1>
+                </div>
+
+                <form id="login-form" class="login-form">
+                  <div class="input-group">
+                    <input type="text" 
+                           id="username" 
+                           placeholder="Username or Email" 
+                           aria-label="Username or Email">
+                    <div class="tooltip" id="username-tooltip"></div>
+                  </div>
+
+                  <div class="input-group">
+                    <div class="password-input-wrapper">
+                      <input type="password" 
+                             id="password" 
+                             placeholder="Password" 
+                             aria-label="Password">
+                      <button type="button" 
+                              class="password-toggle" 
+                              aria-label="Toggle password visibility">
+                        <img src="https://api.iconify.design/tabler:eye.svg?color=%2324292e" 
+                             alt="Show password" 
+                             class="eye-icon show-password">
+                        <img src="https://api.iconify.design/tabler:eye-off.svg?color=%2324292e" 
+                             alt="Hide password" 
+                             class="eye-icon hide-password" 
+                             style="display: none;">
+                      </button>
+                    </div>
+                    <div class="tooltip" id="password-tooltip"></div>
+                  </div>
+
+                  <div class="form-footer">
+                    <button type="button" class="forgot-password">
+                      Forgot password?
+                    </button>
+                    <button type="submit" class="sign-in" id="sign-in-button" disabled>
+                      Sign in
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </section>
+
+            <!-- Forgot Password Card -->
+            <section id="forgot-password-card" class="login-box" style="display: none;">
+              <div class="login-content">
+                <div class="title-container">
+                  <h1>Forgot Password?</h1>
+                  <p>Enter your email to receive a password reset link there.</p>
+                </div>
+
+                <form id="reset-form" class="login-form">
+                  <div class="input-group">
+                    <input type="text" 
+                           id="reset-email" 
+                           placeholder="Email" 
+                           aria-label="Email">
+                    <div class="tooltip" id="email-tooltip"></div>
+                  </div>
+
+                  <div class="form-footer reset-footer">
+                    <button type="button" class="return-to-login">
+                      Return to login
+                    </button>
+                    <button type="submit" class="sign-in" id="submit-reset" disabled>
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

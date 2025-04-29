@@ -1,0 +1,468 @@
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+:root {
+    font-size: 14px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    height: 100%;
+    background: #D5D5D5;
+}
+
+/* App Layout */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    background: #D5D5D5;
+}
+
+/* Test Cases Sidebar */
+.test-cases-sidebar {
+    width: 300px;
+    height: 100vh;
+    background-color: #f6f8fa;
+    border-right: 1px solid #d0d7de;
+    overflow-y: auto;
+}
+
+.sidebar-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+}
+
+.test-cases-section {
+    padding: 20px;
+    flex: 0 0 auto;
+}
+
+.test-cases-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.test-cases-list {
+    list-style: none;
+}
+
+.test-case-button {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.test-case-button:hover {
+    background: #F5F5F5;
+    color: #333;
+}
+
+.test-case-button.active {
+    background: #EBEBEB;
+    color: #000;
+    font-weight: 500;
+}
+
+/* Test Case Description */
+.test-case-description {
+    background: white;
+    border-top: 1px solid #E5E5E5;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+}
+
+#case-description {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    white-space: pre-line;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Login Container */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    width: 100%;
+    padding: 1rem;
+    position: relative;
+    overflow-y: auto;
+}
+
+.content-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+.login-box {
+    background-color: white;
+    width: 300px;
+    padding: 2rem;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-alert, .success-alert, .info-alert {
+    position: absolute;
+    top: 20px; /* Adjusted from -80px to work with padding */
+    left: 0;
+    width: 100%;
+    padding: 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.error-alert {
+    background-color: #fff1f0;
+    border: 1px solid #ffccc7;
+    color: #434343;
+}
+
+.error-alert::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background-image: url('https://api.iconify.design/ph:warning-circle-fill.svg?color=%23ff4d4f');
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+.success-alert {
+    background-color: #dafbe1;
+    border: 1px solid #2da44e66;
+    color: #1a7f37;
+}
+
+.info-alert {
+    background-color: #f6f8fa;
+    border: 1px solid rgba(36, 41, 46, 0.2);
+    color: #24292e;
+}
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+}
+
+.logo {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #24292E;
+}
+
+.title-container h1 {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.04px;
+    line-height: 22px;
+}
+
+.title-container p {
+    font-size: 12px;
+    letter-spacing: 0.02px;
+    line-height: 18px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.password-toggle.visible {
+    opacity: 1;
+}
+
+.eye-icon {
+    width: 16px;
+    height: 16px;
+    display: none;
+}
+
+.eye-icon.show-password {
+    display: block;
+}
+
+.eye-icon.hide-password {
+    display: none;
+}
+
+.input-group input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    border: 1px solid rgba(36, 41, 46, 0.3);
+    border-radius: 2px;
+    color: #24292e;
+    background-color: transparent;
+    outline: none;
+    height: 32px;
+}
+
+.input-group input#username {
+    border-color: #3871DC;
+}
+
+.input-group input[type="password"] {
+    padding-right: 32px;
+}
+
+.input-group input::placeholder {
+    color: rgba(36, 41, 46, 0.64);
+}
+
+.input-group input:focus {
+    box-shadow: 0px 0px 0px 1px #FFF, 0px 0px 0px 3px #3871DC;
+}
+
+.input-group.error input {
+    border-color: #E31C3D;
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    bottom: -32px;
+    left: 0;
+    background-color: #E31C3D;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 2px;
+    font-size: 14px;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip.visible {
+    display: block;
+}
+
+.form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.forgot-password {
+    font-size: 12px;
+    color: #1F62E0;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.02px;
+    line-height: 18px;
+    padding: 0;
+}
+
+.forgot-password:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(56, 113, 220, 0.5);
+    border-radius: 2px;
+}
+
+.sign-in {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0 15px;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    height: 32px;
+    display: flex;
+    align-items: center;
+}
+
+.sign-in:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(56, 113, 220, 0.5);
+}
+
+.sign-in.active {
+    background-color: #3871DC;
+    color: white;
+}
+
+.sign-in.active:hover {
+    background-color: rgba(56, 113, 220, 0.9);
+}
+
+.sign-in:not(.active) {
+    background-color: rgba(36, 41, 46, 0.04);
+    color: #24292e;
+}
+
+.sign-in:not(.active):hover {
+    background-color: rgba(36, 41, 46, 0.08);
+}
+
+.sign-in:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: rgba(36, 41, 46, 0.04) !important;
+    color: #24292e !important;
+}
+
+.return-to-login {
+    font-size: 0.875rem;
+    color: #1F62E0;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.return-to-login:hover {
+    color: #1851b5;
+}
+
+.return-to-login:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(56, 113, 220, 0.5);
+    border-radius: 2px;
+}
+
+@media screen and (max-height: 600px) {
+    .container {
+        align-items: flex-start;
+    }
+    
+    .content-wrapper {
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .test-cases-sidebar {
+        width: 100%;
+        border-right: none;
+        height: auto;
+    }
+
+    .sidebar-content {
+        height: auto;
+        position: relative;
+    }
+
+    .test-case-description {
+        border-bottom: 1px solid #E5E5E5;
+        min-height: 100px;
+    }
+
+    .main-content {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 340px) {
+    .content-wrapper {
+        width: 100%;
+    }
+    
+    .login-box {
+        width: 100%;
+        padding: 1.5rem;
+    }
+    
+    .error-alert, .success-alert, .info-alert {
+        width: calc(100% - 16px);
+        margin: 0 8px;
+    }
+} 
