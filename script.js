@@ -321,6 +321,33 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update description
             const caseNumber = button.getAttribute('data-case');
             description.textContent = testCases[caseNumber];
+
+            // Reset form state
+            usernameInput.value = '';
+            passwordInput.value = '';
+            resetEmailInput.value = '';
+            signInButton.disabled = true;
+            signInButton.classList.remove('active');
+            
+            // Reset error states
+            usernameInput.parentElement.classList.remove('error');
+            passwordInput.parentElement.parentElement.classList.remove('error');
+            resetEmailInput.parentElement.classList.remove('error');
+            hideTooltip(usernameTooltip);
+            hideTooltip(passwordTooltip);
+            hideTooltip(emailTooltip);
+            
+            // Hide all alerts
+            hideAlerts();
+            
+            // Reset password visibility
+            passwordInput.type = 'password';
+            showPasswordIcon.style.display = 'block';
+            hidePasswordIcon.style.display = 'none';
+            passwordToggle.classList.remove('visible');
+            
+            // Show login card and hide forgot password card
+            showLoginCard();
         });
     });
 });
