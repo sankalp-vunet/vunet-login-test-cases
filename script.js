@@ -40,73 +40,75 @@ const testCases = {
     
     16: "Field Clearing Timing\n\nSteps:\n1. Enter credentials\n2. Trigger an error\n3. Observe which fields are cleared\n\nExpected Result:\n- Password field should clear after errors\n- Username field should persist\n- Error states should display correctly",
     
-    17: "Session Timeout\n\nSteps:\n1. Observe the notification banner\n\nExpected Result:\n- Banner displays 'Signed out due to inactivity'\n- After five minutes of inactivity, users are automatically logged out\n- Users must log in again to continue"
+    17: "Session Timeout\n \nContext: When you're ON the platform, and inactive for more than the specified time, then you're signed out.\n \n  Steps:\n1. Observe the notification banner\n\nExpected Result:\n- Banner displays 'Signed out due to inactivity'\n- After five minutes of inactivity, users are automatically logged out\n- Users must log in again to continue\n",
+    
+    18: "Session Timeout 2\n \nContext: When you're only on the login page for more than 5 minutes, then the session expires and the login page auto-refreshes. \n \nSteps:\n1. Observe the notification banner\n\nExpected Result:\n- Banner displays 'Sign-in timed out. Please start over'\n- If you're on the login page for more than 5 minutes, the login session refreshes\n- Users need to restart their login process\n"
 };
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const loginForm = document.getElementById('login-form');
-    const resetForm = document.getElementById('reset-form');
-    const loginCard = document.getElementById('login-card');
-    const forgotPasswordCard = document.getElementById('forgot-password-card');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const resetEmailInput = document.getElementById('reset-email');
-    const signInButton = document.getElementById('sign-in-button');
-    const errorAlert = document.getElementById('error-alert');
-    const errorMessage = document.getElementById('error-message');
-    const successAlert = document.getElementById('success-alert');
-    const infoAlert = document.getElementById('info-alert');
-    const usernameTooltip = document.getElementById('username-tooltip');
-    const passwordTooltip = document.getElementById('password-tooltip');
-    const emailTooltip = document.getElementById('email-tooltip');
-    const passwordToggle = document.querySelector('.password-toggle');
-    const showPasswordIcon = document.querySelector('.show-password');
-    const hidePasswordIcon = document.querySelector('.hide-password');
-    const forgotPasswordButton = document.querySelector('.forgot-password');
-    const returnToLoginButton = document.querySelector('.return-to-login');
+// DOM Elements
+const loginForm = document.getElementById('login-form');
+const resetForm = document.getElementById('reset-form');
+const loginCard = document.getElementById('login-card');
+const forgotPasswordCard = document.getElementById('forgot-password-card');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const resetEmailInput = document.getElementById('reset-email');
+const signInButton = document.getElementById('sign-in-button');
+const errorAlert = document.getElementById('error-alert');
+const errorMessage = document.getElementById('error-message');
+const successAlert = document.getElementById('success-alert');
+const infoAlert = document.getElementById('info-alert');
+const usernameTooltip = document.getElementById('username-tooltip');
+const passwordTooltip = document.getElementById('password-tooltip');
+const emailTooltip = document.getElementById('email-tooltip');
+const passwordToggle = document.querySelector('.password-toggle');
+const showPasswordIcon = document.querySelector('.show-password');
+const hidePasswordIcon = document.querySelector('.hide-password');
+const forgotPasswordButton = document.querySelector('.forgot-password');
+const returnToLoginButton = document.querySelector('.return-to-login');
     const testCaseButtons = document.querySelectorAll('.test-case-button');
     const description = document.getElementById('case-description');
 
     // Current test case tracking
     let currentTestCase = '0';
 
-    // Helper Functions
-    function showError(message) {
-        successAlert.style.display = 'none';
-        infoAlert.style.display = 'none';
-        errorMessage.textContent = message;
-        errorAlert.style.display = 'block';
-    }
+// Helper Functions
+function showError(message) {
+    successAlert.style.display = 'none';
+    infoAlert.style.display = 'none';
+    errorMessage.textContent = message;
+    errorAlert.style.display = 'block';
+}
 
-    function showSuccess() {
-        errorAlert.style.display = 'none';
-        infoAlert.style.display = 'none';
-        successAlert.style.display = 'block';
-    }
+function showSuccess() {
+    errorAlert.style.display = 'none';
+    infoAlert.style.display = 'none';
+    successAlert.style.display = 'block';
+}
 
-    function showInfo(message) {
-        errorAlert.style.display = 'none';
-        successAlert.style.display = 'none';
-        document.getElementById('info-message').textContent = message;
-        infoAlert.style.display = 'block';
-    }
+function showInfo(message) {
+    errorAlert.style.display = 'none';
+    successAlert.style.display = 'none';
+    document.getElementById('info-message').textContent = message;
+    infoAlert.style.display = 'block';
+}
 
-    function hideAlerts() {
-        errorAlert.style.display = 'none';
-        successAlert.style.display = 'none';
-        infoAlert.style.display = 'none';
-    }
+function hideAlerts() {
+    errorAlert.style.display = 'none';
+    successAlert.style.display = 'none';
+    infoAlert.style.display = 'none';
+}
 
-    function showTooltip(element, message) {
-        element.textContent = message;
-        element.classList.add('visible');
-    }
+function showTooltip(element, message) {
+    element.textContent = message;
+    element.classList.add('visible');
+}
 
-    function hideTooltip(element) {
-        element.classList.remove('visible');
-    }
+function hideTooltip(element) {
+    element.classList.remove('visible');
+}
 
     function showLoginCard() {
         forgotPasswordCard.style.display = 'none';
@@ -118,6 +120,21 @@ document.addEventListener('DOMContentLoaded', function() {
         loginCard.style.display = 'none';
         forgotPasswordCard.style.display = 'block';
         resetEmailInput.focus();
+    }
+
+    // Helper functions for validation - only used with Enter key
+    function validateEmptyUsername() {
+    if (!usernameInput.value) {
+        usernameInput.parentElement.classList.add('error');
+            showTooltip(usernameTooltip, 'Username/email field is blank.');
+        }
+    }
+
+    function validateEmptyPassword() {
+    if (!passwordInput.value) {
+        passwordInput.parentElement.parentElement.classList.add('error');
+            showTooltip(passwordTooltip, 'Password field is blank.');
+        }
     }
 
     function configureTestCase(caseNumber) {
@@ -151,9 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitResetButton.disabled = false;
             }
             
-            // Add tooltip behavior for Master Prototype
-            usernameInput.addEventListener('blur', validateEmptyUsername);
-            passwordInput.addEventListener('blur', validateEmptyPassword);
+            // In master prototype, only focus events for hiding tooltips
             usernameInput.addEventListener('focus', () => hideTooltip(usernameTooltip));
             passwordInput.addEventListener('focus', () => hideTooltip(passwordTooltip));
             
@@ -234,6 +249,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
                 signInButton.disabled = false;
+                passwordToggle.style.pointerEvents = 'auto';
+                
+                // Special handling for case 10 - enable button based on any input
+                usernameInput.addEventListener('input', updateSignInButtonForCase10);
+                passwordInput.addEventListener('input', updateSignInButtonForCase10);
+                
+                // Initialize button state
+                updateSignInButtonForCase10();
                 break;
 
             case '11': // Field Validation Timing
@@ -244,6 +267,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 usernameInput.disabled = false;
                 break;
                 
+            case '13': // Special Character Handling
+                usernameInput.disabled = false;
+                passwordInput.disabled = false;
+                break;
+                
+            case '14': // Copy & Paste Behavior
+                usernameInput.disabled = false;
+                passwordInput.disabled = false;
+                break;
+                
+            case '15': // Auto-fill Integration
+                usernameInput.disabled = false;
+                passwordInput.disabled = false;
+                break;
+                
+            case '16': // Field Clearing Timing
+                usernameInput.disabled = false;
+                passwordInput.disabled = false;
+                break;
+                
             case '17': // Session Timeout
                 // Show session timeout message
                 usernameInput.disabled = false;
@@ -251,34 +294,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 signInButton.disabled = false;
                 showError('Signed out due to inactivity');
                 break;
+                
+            case '18': // Session Timeout 2
+                // Show session timeout 2 message
+                usernameInput.disabled = false;
+                passwordInput.disabled = false;
+                signInButton.disabled = false;
+                showError('Sign-in timed out. Please start over');
+                break;
         }
 
         // Add specific handlers for certain test cases
         if (caseNumber === '4') {
-            // Add tooltip behavior for Empty Fields Validation
-            usernameInput.addEventListener('blur', validateEmptyUsername);
-            passwordInput.addEventListener('blur', validateEmptyPassword);
+            // Add tooltip behavior for Empty Fields Validation - only focus events
             usernameInput.addEventListener('focus', () => hideTooltip(usernameTooltip));
             passwordInput.addEventListener('focus', () => hideTooltip(passwordTooltip));
         } else {
             // Remove event listeners for other cases
             usernameInput.removeEventListener('blur', validateEmptyUsername);
             passwordInput.removeEventListener('blur', validateEmptyPassword);
-        }
-
-        // Helper functions for validation
-        function validateEmptyUsername() {
-            if (!usernameInput.value) {
-                usernameInput.parentElement.classList.add('error');
-                showTooltip(usernameTooltip, 'Username/email field is blank.');
-            }
-        }
-
-        function validateEmptyPassword() {
-            if (!passwordInput.value) {
-                passwordInput.parentElement.parentElement.classList.add('error');
-                showTooltip(passwordTooltip, 'Password field is blank.');
-            }
         }
 
         // Make password toggle clickable in more cases
@@ -317,15 +351,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Reset error states
-            usernameInput.parentElement.classList.remove('error');
-            passwordInput.parentElement.parentElement.classList.remove('error');
+    usernameInput.parentElement.classList.remove('error');
+    passwordInput.parentElement.parentElement.classList.remove('error');
             resetEmailInput.parentElement.classList.remove('error');
-            hideTooltip(usernameTooltip);
-            hideTooltip(passwordTooltip);
+    hideTooltip(usernameTooltip);
+    hideTooltip(passwordTooltip);
             hideTooltip(emailTooltip);
-            
+
             // Hide all alerts
-            hideAlerts();
+    hideAlerts();
             
             // Reset password visibility
             passwordInput.type = 'password';
@@ -343,6 +377,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (currentTestCase === '17') {
                 showError('Signed out due to inactivity');
             }
+            
+            // Special case for Session Timeout 2
+            if (currentTestCase === '18') {
+                showError('Sign-in timed out. Please start over');
+            }
         });
     });
 
@@ -356,19 +395,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Update reset form submission for seamless transition
-    resetForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+resetForm.addEventListener('submit', (e) => {
+    e.preventDefault();
         const submitButton = document.getElementById('submit-reset');
         
         if (!resetEmailInput.value || !(['0', '8', '9'].includes(currentTestCase))) {
-            return;
-        }
+        return;
+    }
         
         // Store email value to preserve it
         const emailValue = resetEmailInput.value;
         
         // Show login card immediately
-        showLoginCard();
+    showLoginCard();
         
         // Preserve email in username field, clear password
         usernameInput.value = emailValue;
@@ -406,9 +445,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Ensure the reset email input is focused for better UX
             resetEmailInput.focus();
         }
-    });
+});
 
-    // Input validation and button state
+// Input validation and button state
     usernameInput.addEventListener('input', () => {
         const hasUsername = usernameInput.value.length > 0;
         const hasPassword = passwordInput.value.length > 0;
@@ -420,12 +459,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Update button state for login-related test cases
-        if (['0', '1', '2', '3', '12', '13', '14', '15', '16', '17'].includes(currentTestCase)) {
+        if (['0', '1', '2', '3', '12', '13', '14', '15', '16', '17', '18'].includes(currentTestCase)) {
             signInButton.disabled = !(hasUsername && hasPassword);
             signInButton.classList.toggle('active', hasUsername && hasPassword);
         }
     });
-
+    
     passwordInput.addEventListener('input', () => {
         const hasUsername = usernameInput.value.length > 0;
         const hasPassword = passwordInput.value.length > 0;
@@ -437,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Update button state for login-related test cases
-        if (['0', '1', '2', '3', '12', '13', '14', '15', '16', '17'].includes(currentTestCase)) {
+        if (['0', '1', '2', '3', '12', '13', '14', '15', '16', '17', '18'].includes(currentTestCase)) {
             signInButton.disabled = !(hasUsername && hasPassword);
             signInButton.classList.toggle('active', hasUsername && hasPassword);
         }
@@ -487,8 +526,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle keyboard navigation for all relevant cases
     document.addEventListener('keydown', (e) => {
-        // Only handle tab and enter keys for tooltip-enabled cases
-        if ((e.key === 'Enter' || e.key === 'Tab') && ['0', '4'].includes(currentTestCase)) {
+        // Only handle Enter key for showing tooltips
+        if (e.key === 'Enter' && ['0', '4'].includes(currentTestCase)) {
             const activeElement = document.activeElement;
 
             if (activeElement === usernameInput) {
@@ -497,43 +536,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     showTooltip(usernameTooltip, 'Username/email field is blank.');
                 }
                 
-                // Don't prevent default on Tab - let it navigate naturally
-                if (e.key === 'Tab') {
-                    return;
-                }
-                
                 // For Enter, prevent form submission and move to password
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    passwordInput.focus();
-                }
+                e.preventDefault();
+                passwordInput.focus();
             } else if (activeElement === passwordInput) {
                 if (!passwordInput.value) {
                     passwordInput.parentElement.parentElement.classList.add('error');
                     showTooltip(passwordTooltip, 'Password field is blank.');
                 }
                 
-                // For Enter, prevent default behavior if the field is empty
-                if (e.key === 'Enter' && !passwordInput.value) {
+                // Prevent default behavior if the field is empty
+                if (!passwordInput.value) {
                     e.preventDefault();
                 }
             }
         }
     });
-
-    // Also add document-level handler for blur events to catch tab navigation
-    if (['0', '4'].includes(currentTestCase)) {
-        document.addEventListener('focusout', (e) => {
-            // Check if we're tabbing between relevant form elements
-            if (e.target === usernameInput && !usernameInput.value) {
-                usernameInput.parentElement.classList.add('error');
-                showTooltip(usernameTooltip, 'Username/email field is blank.');
-            } else if (e.target === passwordInput && !passwordInput.value) {
-                passwordInput.parentElement.parentElement.classList.add('error');
-                showTooltip(passwordTooltip, 'Password field is blank.');
-            }
-        });
-    }
 
     // Navigation
     returnToLoginButton.addEventListener('click', () => {
@@ -548,10 +566,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = usernameInput.value;
         const password = passwordInput.value;
 
+        if (currentTestCase === '10') {
+            // Special handling for Alert Behavior case
+            // Alternate between different error messages
+            if (!username || username !== VALID_CREDENTIALS.username) {
+                showError('Username or email does not exist.');
+            } else if (!password || password !== VALID_CREDENTIALS.password) {
+                showError('Your password does not match your username or email.');
+            } else {
+                showError('Account temporarily locked. Please try again later.');
+            }
+            return;
+        }
+        
         if (!username || !password) {
             return;
         }
-
+        
         // Handle different test cases
         if ((currentTestCase === '0' || currentTestCase === '1') && 
             username === VALID_CREDENTIALS.username && 
@@ -566,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
         } else if ((currentTestCase === '0' && username === VALID_CREDENTIALS.username && 
                   password !== VALID_CREDENTIALS.password) || 
-                  currentTestCase === '3' || currentTestCase === '10') {
+                  currentTestCase === '3') {
             // Invalid password cases - giving priority to password error for master prototype
             passwordInput.value = '';
             passwordToggle.classList.remove('visible');
@@ -588,4 +619,13 @@ document.addEventListener('DOMContentLoaded', function() {
     showPasswordIcon.style.display = 'block';
     hidePasswordIcon.style.display = 'none';
     passwordToggle.classList.toggle('visible', passwordInput.value.length > 0);
+
+    // Helper function for case 10
+    function updateSignInButtonForCase10() {
+        if (currentTestCase === '10') {
+            const hasAnyInput = usernameInput.value.length > 0 || passwordInput.value.length > 0;
+            signInButton.disabled = !hasAnyInput;
+            signInButton.classList.toggle('active', hasAnyInput);
+        }
+    }
 }); 
