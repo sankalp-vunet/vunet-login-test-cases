@@ -56,8 +56,8 @@ const resetEmailInput = document.getElementById('reset-email');
 const signInButton = document.getElementById('sign-in-button');
 const errorAlert = document.getElementById('error-alert');
 const errorMessage = document.getElementById('error-message');
-const successAlert = document.getElementById('success-alert');
 const infoAlert = document.getElementById('info-alert');
+const infoMessage = document.getElementById('info-message');
 const usernameTooltip = document.getElementById('username-tooltip');
 const passwordTooltip = document.getElementById('password-tooltip');
 const emailTooltip = document.getElementById('email-tooltip');
@@ -97,28 +97,25 @@ const returnToLoginButton = document.querySelector('.return-to-login');
 
 // Helper Functions
 function showError(message) {
-    successAlert.style.display = 'none';
     infoAlert.style.display = 'none';
     errorMessage.textContent = message;
     errorAlert.style.display = 'block';
 }
 
 function showSuccess() {
+    // Hide all alerts on successful login
     errorAlert.style.display = 'none';
     infoAlert.style.display = 'none';
-    successAlert.style.display = 'block';
 }
 
 function showInfo(message) {
     errorAlert.style.display = 'none';
-    successAlert.style.display = 'none';
-    document.getElementById('info-message').textContent = message;
+    infoMessage.textContent = message;
     infoAlert.style.display = 'block';
 }
 
 function hideAlerts() {
     errorAlert.style.display = 'none';
-    successAlert.style.display = 'none';
     infoAlert.style.display = 'none';
 }
 

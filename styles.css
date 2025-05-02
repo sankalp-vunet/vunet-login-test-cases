@@ -215,7 +215,6 @@ html, body {
 }
 
 .error-alert,
-.success-alert,
 .info-alert {
     display: none;
     margin-bottom: 16px;
@@ -246,16 +245,10 @@ html, body {
     flex-shrink: 0;
 }
 
-.success-alert {
+.info-alert {
     background-color: #dafbe1;
     border: 1px solid #2da44e66;
     color: #1a7f37;
-}
-
-.info-alert {
-    background-color: #f6f8fa;
-    border: 1px solid rgba(36, 41, 46, 0.2);
-    color: #24292e;
 }
 
 .login-content {
@@ -548,7 +541,7 @@ html, body {
         padding: 1.5rem;
     }
     
-    .error-alert, .success-alert, .info-alert {
+    .error-alert, .info-alert {
         width: calc(100% - 16px);
         margin: 0 8px;
     }
