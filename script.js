@@ -71,6 +71,29 @@ const returnToLoginButton = document.querySelector('.return-to-login');
 
     // Current test case tracking
     let currentTestCase = '1';
+    
+    // Check if URL has a case hash and load that case
+    function loadCaseFromHash() {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#case=')) {
+            const caseNumber = hash.replace('#case=', '');
+            if (testCases[caseNumber]) {
+                // Find the button with this case number
+                const button = document.querySelector(`.test-case-button[data-case="${caseNumber}"]`);
+                if (button) {
+                    // Simulate a click on this button
+                    button.click();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Function to update the URL hash without triggering a page reload
+    function updateUrlHash(caseNumber) {
+        history.replaceState(null, null, `#case=${caseNumber}`);
+    }
 
 // Helper Functions
 function showError(message) {
@@ -133,6 +156,26 @@ function hideTooltip(element) {
         passwordInput.parentElement.parentElement.classList.add('error');
             showTooltip(passwordTooltip, 'Password field is blank.');
         }
+    }
+
+    // Function to copy the current case link to clipboard
+    function copyCurrentCaseLink() {
+        const url = `${window.location.origin}${window.location.pathname}#case=${currentTestCase}`;
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                // Show temporary success message
+                const button = document.querySelector(`.case-copy-button[data-case="${currentTestCase}"]`);
+                if (button) {
+                    const originalText = button.textContent;
+                    button.textContent = "Copied!";
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 1500);
+                }
+            })
+            .catch(err => {
+                console.error('Failed to copy link: ', err);
+            });
     }
 
     function configureTestCase(caseNumber) {
@@ -281,7 +324,7 @@ function hideTooltip(element) {
                 passwordInput.disabled = false;
                 break;
                 
-            case '17': // Session Timeout
+            case '17': // Session Timeout A
                 // Show session timeout message
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
@@ -289,7 +332,7 @@ function hideTooltip(element) {
                 showError('Signed out due to inactivity');
                 break;
                 
-            case '18': // Session Timeout 2
+            case '18': // Session Timeout B
                 // Show session timeout 2 message
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
@@ -315,6 +358,40 @@ function hideTooltip(element) {
         }
     }
 
+    // Add copy link buttons to each test case
+    testCaseButtons.forEach(button => {
+        const caseNumber = button.getAttribute('data-case');
+        const listItem = button.parentElement;
+        
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.className = 'case-copy-button';
+        copyButton.setAttribute('data-case', caseNumber);
+        copyButton.textContent = '🔗';
+        copyButton.title = 'Copy link to this test case';
+        
+        // Add click event listener to copy the link
+        copyButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent triggering the test case button click
+            const url = `${window.location.origin}${window.location.pathname}#case=${caseNumber}`;
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    // Show temporary success message
+                    const originalText = copyButton.textContent;
+                    copyButton.textContent = "✓";
+                    setTimeout(() => {
+                        copyButton.textContent = originalText;
+                    }, 1500);
+                })
+                .catch(err => {
+                    console.error('Failed to copy link: ', err);
+                });
+        });
+        
+        // Add the copy button to the list item
+        listItem.appendChild(copyButton);
+    });
+
     // Event listeners for each test case button
     testCaseButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -325,6 +402,9 @@ function hideTooltip(element) {
             // Update current test case and description
             currentTestCase = button.getAttribute('data-case');
             description.textContent = testCases[currentTestCase];
+            
+            // Update URL hash
+            updateUrlHash(currentTestCase);
 
             // Reset form state
             if (currentTestCase === '9') {
@@ -378,6 +458,18 @@ function hideTooltip(element) {
             }
         });
     });
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', loadCaseFromHash);
+    
+    // Try to load a case from the URL hash when the page first loads
+    if (!loadCaseFromHash()) {
+        // If no case in hash or invalid case, default to case 1
+        const defaultButton = document.querySelector('.test-case-button[data-case="1"]');
+        if (defaultButton) {
+            defaultButton.click();
+        }
+    }
 
     // Enable submit button for forgot password
     resetEmailInput.addEventListener('input', () => {
