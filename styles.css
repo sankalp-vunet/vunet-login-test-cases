@@ -60,6 +60,16 @@ html, body {
     margin: 0;
 }
 
+.test-cases-info {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    padding: 0 20px 12px;
+    margin: 0;
+    background: #f6f8fa;
+    border-bottom: 1px solid #d0d7de;
+}
+
 .test-cases-list-container {
     flex: 1;
     overflow-y: auto;
@@ -512,6 +522,10 @@ html, body {
     .test-cases-section {
         height: auto;
         max-height: 30vh;
+    }
+    
+    .test-cases-info {
+        padding: 0 20px 10px;
     }
 
     .test-case-description {
