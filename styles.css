@@ -336,7 +336,7 @@ html, body {
 }
 
 .input-group input[type="password"] {
-    padding-right: 32px;
+    padding-right: 42px;
 }
 
 .input-group input::placeholder {

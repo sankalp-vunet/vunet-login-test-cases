@@ -6,8 +6,6 @@ const VALID_CREDENTIALS = {
 
 // Test case descriptions
 const testCases = {
-    0: "Master Prototype\n\nThis is a fully functional prototype combining all test cases below. All interactions, validations, and behaviors are available to test in this mode.\n\nYou can:\n- Test valid and invalid logins\n- Trigger error states and alerts\n- Test form validations\n- Try password visibility toggle\n- Use forgot password flow\n- Test special character handling\n- Try copy/paste behavior\n- Test auto-fill capabilities\n- Observe field clearing timing\n- and more...",
-
     1: "Valid Login\n\nSteps:\n1. Enter username: 'vunet'\n2. Enter password: 'asdfg@123'\n3. Click 'Sign in' button\n\nExpected Result:\n- Success message appears\n- Button changes to 'Signing in...' state",
 
     2: "Invalid Username\n\nSteps:\n1. Enter any username except 'vunet' (e.g., 'wronguser')\n2. Enter any password\n3. Click 'Sign in' button\n\nExpected Result:\n- Error message: 'Username or email does not exist'",
@@ -16,7 +14,7 @@ const testCases = {
 
     4: "Empty Fields Validation\n\nSteps:\n1. Leave both fields empty\n2. Click in username field, then tab out\n3. Click in password field, then tab out\n\nExpected Result:\n- Red border appears around empty fields\n- Tooltips appear showing 'field is blank' messages\n- Sign in button remains disabled",
 
-    5: "Focus Loss Behavior\n\nSteps:\n1. Click in username field\n2. Type partial text\n3. Click outside the login card\n4. Repeat for password field\n\nExpected Result:\n- Any visible tooltips should disappear\n- Field borders return to normal state\n- Form state is preserved",
+    5: "Focus State Behavior\n\nSteps:\n1. Click in username field\n2. Type partial text\n3. Click outside the login card\n4. Repeat for password field\n\nExpected Result:\n- Any visible tooltips should disappear\n- Field borders return to normal state\n- Form state is preserved",
 
     6: "Password Visibility Toggle\n\nSteps:\n1. Enter some text in password field\n2. Click the eye icon to show password\n3. Click again to hide password\n4. Clear the field\n\nExpected Result:\n- Eye icon appears only when field has text\n- Password toggles between visible and hidden\n- Eye icon disappears when field is empty",
 
@@ -24,11 +22,9 @@ const testCases = {
 
     8: "Forgot Password Flow\n\nSteps:\n1. Click 'Forgot password?' link\n2. Observe the new card\n3. Enter any text in email field\n4. Click 'Submit'\n5. Observe 'Check your inbox for a reset link' message\n6. Return to login with email preserved in username field\n\nExpected Result:\n- Switches to password reset card\n- Submit button enables with any input\n- Shows success message on submit\n- Email is preserved in username field\n- Password field is cleared",
 
-    9: "Form State Management\n\nSteps:\n1. Enter partial credentials\n2. Switch to forgot password\n3. Return to login\n\nExpected Result:\n- Form fields should be cleared\n- No error states persist\n- Sign in button returns to default state",
+    9: "Return to Login\n\nSteps:\n1. Enter partial credentials\n2. Switch to forgot password\n3. Return to login\n\nExpected Result:\n- Form fields should be cleared\n- No error states persist\n- Sign in button returns to default state",
 
     10: "Alert Behavior\n\nSteps:\n1. Trigger an error (e.g., wrong password)\n2. Quickly trigger another error\n\nExpected Result:\n- New alerts replace existing ones\n- Alerts remain visible until next action\n- Alerts don't stack or overlap",
-
-    11: "Field Validation Timing\n\nSteps:\n1. Type in username field\n2. Delete text\n3. Tab out\n4. Click in and out\n\nExpected Result:\n- Validation occurs on blur (focus loss)\n- Validation triggers on tab\n- Error states clear on focus",
     
     12: "Input Length Limits\n\nSteps:\n1. Try entering very long text in username field\n2. Try entering very long text in password field\n3. Observe input behavior\n\nExpected Result:\n- Fields should handle long inputs appropriately\n- No unexpected UI breakage\n- Input validation remains functional",
     
@@ -38,11 +34,13 @@ const testCases = {
     
     15: "Auto-fill Integration\n\nSteps:\n1. Allow browser to offer saved credentials\n2. Accept browser auto-fill\n3. Observe form state\n\nExpected Result:\n- Auto-filled fields are properly recognized\n- Button states update correctly\n- Form styling remains consistent",
     
-    16: "Field Clearing Timing\n\nSteps:\n1. Enter credentials\n2. Trigger an error\n3. Observe which fields are cleared\n\nExpected Result:\n- Password field should clear after errors\n- Username field should persist\n- Error states should display correctly",
+    16: "Input Field Behavior\n\nSteps:\n1. Enter credentials\n2. Trigger an error\n3. Observe which fields are cleared\n\nExpected Result:\n- Password field should clear after errors\n- Username field should persist\n- Error states should display correctly",
     
-    17: "Session Timeout\n \nContext: When you're ON the platform, and inactive for more than the specified time, then you're signed out.\n \n  Steps:\n1. Observe the notification banner\n\nExpected Result:\n- Banner displays 'Signed out due to inactivity'\n- After five minutes of inactivity, users are automatically logged out\n- Users must log in again to continue\n",
+    17: "Session Timeout A\n \nContext: When you're ON the platform, and inactive for more than the specified time, then you're signed out.\n \n  Steps:\n1. Observe the notification banner\n\nExpected Result:\n- Banner displays 'Signed out due to inactivity'\n- After five minutes of inactivity, users are automatically logged out\n- Users must log in again to continue\n",
     
-    18: "Session Timeout 2\n \nContext: When you're only on the login page for more than 5 minutes, then the session expires and the login page auto-refreshes. \n \nSteps:\n1. Observe the notification banner\n\nExpected Result:\n- Banner displays 'Sign-in timed out. Please start over'\n- If you're on the login page for more than 5 minutes, the login session refreshes\n- Users need to restart their login process\n"
+    18: "Session Timeout B\n \nContext: When you're only on the login page for more than 5 minutes, then the session expires and the login page auto-refreshes. \n \nSteps:\n1. Observe the notification banner\n\nExpected Result:\n- Banner displays 'Sign-in timed out. Please start over'\n- If you're on the login page for more than 5 minutes, the login session refreshes\n- Users need to restart their login process\n",
+
+    0: "Master Prototype\n\nThis is a fully functional prototype combining all test cases below. All interactions, validations, and behaviors are available to test in this mode.\n\nYou can:\n- Test valid and invalid logins\n- Trigger error states and alerts\n- Test form validations\n- Try password visibility toggle\n- Use forgot password flow\n- Test special character handling\n- Try copy/paste behavior\n- Test auto-fill capabilities\n- Observe field clearing timing\n- and more..."
 };
 
 // Wait for DOM to be fully loaded
@@ -72,7 +70,7 @@ const returnToLoginButton = document.querySelector('.return-to-login');
     const description = document.getElementById('case-description');
 
     // Current test case tracking
-    let currentTestCase = '0';
+    let currentTestCase = '1';
 
 // Helper Functions
 function showError(message) {
@@ -157,11 +155,11 @@ function hideTooltip(element) {
         usernameInput.removeEventListener('focus', () => hideTooltip(usernameTooltip));
         passwordInput.removeEventListener('focus', () => hideTooltip(passwordTooltip));
         
-        // Master prototype case - enable everything
+        // Master prototype case - enable everything except sign in button (which requires input)
         if (caseNumber === '0') {
             usernameInput.disabled = false;
             passwordInput.disabled = false;
-            signInButton.disabled = false;
+            // Sign in button remains disabled until both fields have input
             forgotPasswordButton.disabled = false;
             passwordToggle.style.pointerEvents = 'auto';
             if (submitResetButton) {
@@ -179,7 +177,7 @@ function hideTooltip(element) {
         if (['12', '13', '14', '15', '16'].includes(caseNumber)) {
             usernameInput.disabled = false;
             passwordInput.disabled = false;
-            signInButton.disabled = false;
+            // Sign in button remains disabled until both fields have input
             passwordToggle.style.pointerEvents = 'auto';
         }
 
@@ -188,20 +186,20 @@ function hideTooltip(element) {
             case '1': // Valid Login
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
-                signInButton.disabled = false;
+                // Sign in button remains disabled until both fields have input
                 passwordToggle.style.pointerEvents = 'auto';
                 break;
 
             case '2': // Invalid Username
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
-                signInButton.disabled = false;
+                // Sign in button remains disabled until both fields have input
                 break;
 
             case '3': // Invalid Password
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
-                signInButton.disabled = false;
+                // Sign in button remains disabled until both fields have input
                 break;
 
             case '4': // Empty Fields Validation
@@ -209,7 +207,7 @@ function hideTooltip(element) {
                 passwordInput.disabled = false;
                 break;
 
-            case '5': // Focus Loss Behavior
+            case '5': // Focus State Behavior
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
                 break;
@@ -222,7 +220,7 @@ function hideTooltip(element) {
             case '7': // Keyboard Navigation
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
-                signInButton.disabled = false;
+                // Sign in button remains disabled until both fields have input
                 forgotPasswordButton.disabled = false;
                 passwordToggle.style.pointerEvents = 'auto';
                 break;
@@ -237,7 +235,7 @@ function hideTooltip(element) {
                 }
                 break;
 
-            case '9': // Form State Management
+            case '9': // Return to Login
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
                 forgotPasswordButton.disabled = false;
@@ -248,7 +246,7 @@ function hideTooltip(element) {
             case '10': // Alert Behavior
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
-                signInButton.disabled = false;
+                // Sign in button is handled differently for this case
                 passwordToggle.style.pointerEvents = 'auto';
                 
                 // Special handling for case 10 - enable button based on any input
@@ -257,10 +255,6 @@ function hideTooltip(element) {
                 
                 // Initialize button state
                 updateSignInButtonForCase10();
-                break;
-
-            case '11': // Field Validation Timing
-                usernameInput.disabled = false;
                 break;
 
             case '12': // Input Length Limits
@@ -282,7 +276,7 @@ function hideTooltip(element) {
                 passwordInput.disabled = false;
                 break;
                 
-            case '16': // Field Clearing Timing
+            case '16': // Input Field Behavior
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
                 break;
@@ -291,7 +285,7 @@ function hideTooltip(element) {
                 // Show session timeout message
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
-                signInButton.disabled = false;
+                // Sign in button remains disabled until both fields have input
                 showError('Signed out due to inactivity');
                 break;
                 
@@ -299,7 +293,7 @@ function hideTooltip(element) {
                 // Show session timeout 2 message
                 usernameInput.disabled = false;
                 passwordInput.disabled = false;
-                signInButton.disabled = false;
+                // Sign in button remains disabled until both fields have input
                 showError('Sign-in timed out. Please start over');
                 break;
         }
@@ -458,11 +452,9 @@ resetForm.addEventListener('submit', (e) => {
             hideTooltip(usernameTooltip);
         }
         
-        // Update button state for login-related test cases
-        if (['0', '1', '2', '3', '12', '13', '14', '15', '16', '17', '18'].includes(currentTestCase)) {
-            signInButton.disabled = !(hasUsername && hasPassword);
-            signInButton.classList.toggle('active', hasUsername && hasPassword);
-        }
+        // Update button state for all cases - always require both fields to have content
+        signInButton.disabled = !(hasUsername && hasPassword);
+        signInButton.classList.toggle('active', hasUsername && hasPassword);
     });
     
     passwordInput.addEventListener('input', () => {
@@ -475,11 +467,9 @@ resetForm.addEventListener('submit', (e) => {
             hideTooltip(passwordTooltip);
         }
         
-        // Update button state for login-related test cases
-        if (['0', '1', '2', '3', '12', '13', '14', '15', '16', '17', '18'].includes(currentTestCase)) {
-            signInButton.disabled = !(hasUsername && hasPassword);
-            signInButton.classList.toggle('active', hasUsername && hasPassword);
-        }
+        // Update button state for all cases - always require both fields to have content
+        signInButton.disabled = !(hasUsername && hasPassword);
+        signInButton.classList.toggle('active', hasUsername && hasPassword);
         
         // Show/hide password toggle based on input content
         passwordToggle.classList.toggle('visible', passwordInput.value.length > 0);
@@ -513,7 +503,7 @@ resetForm.addEventListener('submit', (e) => {
     signInButton.setAttribute('tabindex', '4');
     forgotPasswordButton.setAttribute('tabindex', '5');
 
-    // Password visibility toggle
+    // Password visibility toggle - Ensure password toggle has a background fill
     passwordToggle.addEventListener('click', () => {
         // Always allow toggle regardless of case
         if (passwordInput.value.length > 0) {  // Only toggle if there's text
@@ -523,6 +513,28 @@ resetForm.addEventListener('submit', (e) => {
             hidePasswordIcon.style.display = type === 'password' ? 'none' : 'block';
         }
     });
+
+    // Add style to password toggle to ensure it has background
+    const style = document.createElement('style');
+    style.textContent = `
+        .password-toggle {
+            background-color: white;
+            position: absolute;
+            right: 10px;
+        }
+        .password-input-container {
+            position: relative;
+        }
+        .password-input-container input,
+        .password-input-wrapper input {
+            padding-right: 42px; /* Increased padding to ensure text doesn't go under the toggle */
+        }
+        /* Extra specific selector to ensure it overrides any other styles */
+        #password {
+            padding-right: 42px;
+        }
+    `;
+    document.head.appendChild(style);
 
     // Handle keyboard navigation for all relevant cases
     document.addEventListener('keydown', (e) => {
@@ -611,9 +623,9 @@ resetForm.addEventListener('submit', (e) => {
         }
     });
 
-    // Initialize with test case 0 (Master Prototype)
-    description.textContent = testCases['0'];
-    configureTestCase('0');
+    // Initialize with test case 1 (first test case)
+    description.textContent = testCases['1'];
+    configureTestCase('1');
 
     // Initialize password toggle state
     showPasswordIcon.style.display = 'block';
@@ -623,9 +635,10 @@ resetForm.addEventListener('submit', (e) => {
     // Helper function for case 10
     function updateSignInButtonForCase10() {
         if (currentTestCase === '10') {
-            const hasAnyInput = usernameInput.value.length > 0 || passwordInput.value.length > 0;
-            signInButton.disabled = !hasAnyInput;
-            signInButton.classList.toggle('active', hasAnyInput);
+            const hasUsername = usernameInput.value.length > 0;
+            const hasPassword = passwordInput.value.length > 0;
+            signInButton.disabled = !(hasUsername && hasPassword);
+            signInButton.classList.toggle('active', hasUsername && hasPassword);
         }
     }
 }); 
